@@ -12,13 +12,14 @@ requirejs.config({
 		'jquery' : 'lib/jquery-2.1.0.min',
 
         // States
-		'Preloader' : 'states/preloader.min',
-		'Play' : 'states/play.min',
+		'Preloader' : 'states/src/preloader',
+		'Play' : 'states/src/play',
 
         // Entities
-		'Clouds' : 'entities/clouds.min',
-		'Hills' : 'entities/hills.min',
-	
+    	'Parallax' : 'entities/src/parallax',
+		'Clouds' : 'entities/src/clouds',
+		'Hills' : 'entities/src/hills',
+
 		'App' : 'app.min'
 	},
 	urlArgs : "bust="+(new Date()).getTime()

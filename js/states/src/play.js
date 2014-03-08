@@ -1,10 +1,12 @@
 define('Play',[
+
 	'Clouds',
 	'Hills',
+	'Parallax',
 	//'Feed',
 	//'Review',
 	'create'
-], function(Clouds, Hills) {
+], function(Clouds, Hills, Parallax) {
 	var Play;
 
 	Play = {
@@ -19,7 +21,26 @@ define('Play',[
         	createjs.Ticker.on("tick", this.tick, this);
 			createjs.Ticker.setFPS(60);
 
-			this.setup('explore', this.stage)
+			this.setup('explore', this.stage);
+
+			// //initialize parallax layer
+			// this.parallax = new Parallax();
+
+			// that.parallaxLayer['hay'] = new ParallaxLayer({
+			// 	bitmap: assets['hay'], 
+			// 	x: 0, y: 0, 
+			// 	width: stage.canvas.width,
+			// 	height: 100, 
+			// 	velocity: {x: -0.5, y: 0},
+			// 	acceleration : -0.005
+			// });
+		
+
+			// //add the display elements to the stage
+			// this.stage.addChild(
+			// 	this.parallaxLayer['hay'].graphics			
+			// );
+
 
 
 		},
