@@ -10,12 +10,14 @@ define('Play',[
 	var Play;
 
 	Play = {
-		enter : function(canvas, stage, assets){
+
+		enter : function(canvas, stage, assets, viewport){
 			var that = this;
 			this.canvas = canvas;
 			this.stage = stage;
 			this.assets = assets;
-			this.gameOver = false;
+			this.viewport = viewport;
+			this.gameOver = false;	
 
 			//set FPS and start listening to game ticks
         	createjs.Ticker.on("tick", this.tick, this);
@@ -23,18 +25,39 @@ define('Play',[
 
 			this.setup('explore', this.stage);
 
-			// //initialize parallax layer
-			// this.parallax = new Parallax();
 
-			// that.parallaxLayer['hay'] = new ParallaxLayer({
-			// 	bitmap: assets['hay'], 
-			// 	x: 0, y: 0, 
-			// 	width: stage.canvas.width,
-			// 	height: 100, 
-			// 	velocity: {x: -0.5, y: 0},
-			// 	acceleration : -0.005
-			// });
-		
+			this.parallaxLayers = [];
+
+			// for (var i = 0; i < 10; i++) {
+
+			// 	name = 'hay_' + i;
+
+			that.parallaxLayers['hay'] = new Parallax({
+				bitmap: this.assets['hay'], 
+				x: 0, 
+				y: 0,
+				offset: 1,
+			});
+
+			// cont = new createjs.Container();
+
+
+
+			// image = new createjs.Bitmap(this.assets['hay'])
+
+			// cont.addChild(image);
+
+			// this.stage.addChild(cont);
+			// // // }
+
+			this.stage.addChild(
+				this.parallaxLayers['hay'].graphics
+			);
+
+			document.onkeypress = function(e) {
+				that.handleKey(e);
+			};
+
 
 			// //add the display elements to the stage
 			// this.stage.addChild(
@@ -44,6 +67,22 @@ define('Play',[
 
 
 		},
+
+		handleKey: function(e) {
+			console.log('handling');
+			switch (e.which || e.keyCode){
+				case 39: // right arrow key
+					this.viewport.x += 10;
+					console.log(window.viewport.x);
+				break;
+				case 37: // left arrow key
+					this.viewport.x -= 10;
+					console.log(window.viewport.x);
+				break;
+			}
+
+		},
+
 		setup: function(scene, stage) {
 
 			switch(scene) {
@@ -71,6 +110,7 @@ define('Play',[
 
 		},
 
+	
 		initHills: function(stage) {
 
 			// create the cloud layer			
@@ -105,6 +145,14 @@ define('Play',[
 			console.log('Game ended');
 		},
 		tick : function(event){
+
+			for(var i in this.parallaxLayers){
+				this.parallaxLayers[i].update();
+				this.parallaxLayers[i].render();
+			}	
+
+			this.viewport.x += 1;
+
 
 			this.stage.update(event);
 		}

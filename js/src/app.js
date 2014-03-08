@@ -55,6 +55,7 @@ define('App', [
 			this.canvas = document.getElementById("mainCanvas");
         	this.stage = new createjs.Stage(this.canvas);
         	this.stage.autoClear = true;
+        	this.viewport = {x: 0, y: 0};
 
 			createjs.Touch.enable(this.stage);
 
@@ -71,7 +72,7 @@ define('App', [
 		gotoPlay : function(){
 			var that = this;
 			//start Play state
-			Play.enter(this.canvas, this.stage, this.assets);		
+			Play.enter(this.canvas, this.stage, this.assets, this.viewport);		
 		}
 
 	}
