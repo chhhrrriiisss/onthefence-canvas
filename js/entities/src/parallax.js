@@ -32,15 +32,9 @@ define('Parallax',[
 
 		update : function(){
 
-			//keep accelerating the x velocity
-
-			
-			if (this.loop) {
-				//this.targetX = window.viewport.x % this.width;\
-				this.targetX = Scene.get('viewport-x') * this.offset;
-			} else {
-				this.targetX = Scene.get('viewport-x') * this.offset;
-			}
+			//keep accelerating the x velocity	
+			var vX = Scene.viewport.x();
+			this.targetX = vX * this.offset;
 
 			//console.log(Play.viewport.x);
 

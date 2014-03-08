@@ -14,7 +14,7 @@ define('App', [
 			/*********************************************************************************/
 
 			if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-			    //document.write('<script src="http://jsconsole.com/remote.js?A59D6C66-CAC6-4451-AD9D-FA48E363EB20"></script>');    
+			    document.write('<script src="http://jsconsole.com/remote.js?A59D6C66-CAC6-4451-AD9D-FA48E363EB20"></script>');    
 			}
 
 			/*********************************************************************************/
@@ -31,8 +31,6 @@ define('App', [
 			this.stage.canvas.width = 1360;
 			this.stage.canvas.height = 720;
 		
-
-
 			this.properties = {
 				"canvas" : this.canvas,
 				"stage" : this.stage,
@@ -41,12 +39,11 @@ define('App', [
 				"target-x" : 0,
 				"target-y" : 0,
 				"left-boundary" : -2000,
-				"right-boundary" : 20000
+				"right-boundary" : 20000,
+				"easing" : 10
 			}
 
-			Scene.properties(this.properties)
-
-			
+			Scene.initialize(this.properties);
 
 			createjs.Touch.enable(this.stage);
 
@@ -73,21 +70,21 @@ define('App', [
 
 				that.setSize();	
 	
-				that.gotoPlay();       	
+				that.start();       	
 	        
 			});
 
 		},
-		gotoPlay : function(){
+		start : function(){
+
 			var that = this;
 			//start Play state
-			Play.enter(this.canvas, this.stage, this.assets, this.viewport);		
+			Play.enter(this.canvas, this.stage, this.assets, this.viewport);	
+
+			//Scene.goto("explore");
+
 		},
 		setSize : function() {
-
-			
-
-			
 
 			var s = Scene.get('stage');
 			var w = s.canvas.width = this.wrapper.offsetWidth;

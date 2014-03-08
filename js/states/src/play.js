@@ -22,9 +22,6 @@ define('Play',[
         	createjs.Ticker.on("tick", this.tick, this);
 			createjs.Ticker.setFPS(60);
 
-			this.setup('explore', this.stage);
-
-
 			this.parallaxLayers = [];
 
 
@@ -62,11 +59,11 @@ define('Play',[
 		addHooks: function () {
 
 			Hammer(document).on("swipeleft", function(event) {
-				Scene.move(-1000);
+				Scene.viewport.nudge(-1000);
 			});
 
 			Hammer(document).on("swiperight", function(event) {
-				Scene.move(1000);		
+				Scene.viewport.nudge(1000);		
 			});
 
 			  // using "on" binds the listener to the scope of the currentTarget by default
@@ -75,12 +72,12 @@ define('Play',[
 
 				switch (e.which || e.keyCode) {
 					case 39: // right arrow key
-						Scene.move(-10);
+						Scene.viewport.nudge(-10);
 						//console.log(window.viewport.x);
 					break;
 
 					case 37: // left arrow key
-						Scene.move(10);
+						Scene.viewport.nudge(10);
 						//console.log(window.viewport.x);
 					break;
 				}
@@ -89,46 +86,14 @@ define('Play',[
 
 		},
 
-		setup: function(scene, stage) {
-
-			switch(scene) {
-
-				case "explore":
-				//
-				//this.initHills(stage);
-				
-				break;
-
-				case "feed":
-				//
-				//this.initHills(stage);
-				break;
-
-				case "review":
-				//
-				break;
-
-				default:					
-
-			}
-
-			//this.initClouds(stage);	
-
-		},
-
 		exit : function(){
 			console.log('Game ended');
 		},
 		tick : function(event){
 
-			var newX = Scene.get('viewport-x');
 
-			var difX = Scene.get('target-x') - newX;
-			var easing = 10;
-
-			newX += difX / easing;
-
-			Scene.set('viewport-x', Math.round(newX));
+			Scene.update();
+			Scene.render();
 
 			this.cloudLayer.update();
 			this.cloudLayer.render();
@@ -137,10 +102,7 @@ define('Play',[
 				this.parallaxLayers[i].update();
 				this.parallaxLayers[i].render();
 			}	
-
-			//this.viewport.x += 1;
-
-
+			
 			this.stage.update(event);
 		}
 	}
