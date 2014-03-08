@@ -6,7 +6,8 @@ define('Preloader', [
 
 	var assetManifest = [
 		{id: "clouds", src:"img/clouds_loop.png"},
-		{id: "hills_med", src:"img/hill_loop_med.png"},
+		{id: "hills_med", src:"img/hill_med.png"},
+		{id: "hills_far", src:"img/hill_far.png"},
 		{id: "hay", src:"img/hay_blank.jpg"}
 	];
 

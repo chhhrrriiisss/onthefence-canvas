@@ -1,12 +1,11 @@
 define('Play',[
-
 	'Clouds',
 	'Hills',
 	'Parallax',
-	//'Feed',
-	//'Review',
+	'Hammer',
+	'Scene',
 	'create'
-], function(Clouds, Hills, Parallax) {
+], function(Clouds, Hills, Parallax, Hammer, Scene) {
 	var Play;
 
 	Play = {
@@ -28,58 +27,65 @@ define('Play',[
 
 			this.parallaxLayers = [];
 
+
+
 			// for (var i = 0; i < 10; i++) {
 
 			// 	name = 'hay_' + i;
 
-			that.parallaxLayers['hay'] = new Parallax({
-				bitmap: this.assets['hay'], 
-				x: 0, 
-				y: 0,
-				offset: 1,
-			});
+			// stage.canvas.height - 
 
+			var hills_far = this.assets['hills_far'];
+			var hills_med = this.assets['hills_med'];
+			var hay = this.assets['hay'];
+		
+			that.parallaxLayers['hay'] = new Parallax(0, 600, this.assets['hay'], 1, 10); // x, y, image, offset, easing
+			that.parallaxLayers['hill_med'] = new Parallax(0, parseInt(this.stage.canvas.height - hills_med.height), hills_med, 1, 10, true); // x, y, image, offset, easing, loop\
+			that.parallaxLayers['hill_far'] = new Parallax(-2000, parseInt(this.stage.canvas.height - hills_far.height) - 25, hills_far, .5, 10, true); // x, y, image, offset, easing, loop\
 			// cont = new createjs.Container();
 
-
-
-			// image = new createjs.Bitmap(this.assets['hay'])
-
-			// cont.addChild(image);
-
-			// this.stage.addChild(cont);
-			// // // }
-
-			this.stage.addChild(
+			this.cloudLayer = new Clouds(this.assets['clouds']);
+			
+			stage.addChild(
+				this.cloudLayer.graphics,
+				this.parallaxLayers['hill_far'].graphics,
+				this.parallaxLayers['hill_med'].graphics,
 				this.parallaxLayers['hay'].graphics
+				
 			);
 
-			document.onkeypress = function(e) {
-				that.handleKey(e);
-			};
-
-
-			// //add the display elements to the stage
-			// this.stage.addChild(
-			// 	this.parallaxLayer['hay'].graphics			
-			// );
-
-
+			this.addHooks();
+  
 
 		},
 
-		handleKey: function(e) {
-			console.log('handling');
-			switch (e.which || e.keyCode){
-				case 39: // right arrow key
-					this.viewport.x += 10;
-					console.log(window.viewport.x);
-				break;
-				case 37: // left arrow key
-					this.viewport.x -= 10;
-					console.log(window.viewport.x);
-				break;
-			}
+		addHooks: function () {
+
+			Hammer(document).on("swipeleft", function(event) {
+				Scene.move(-1000);
+			});
+
+			Hammer(document).on("swiperight", function(event) {
+				Scene.move(1000);		
+			});
+
+			  // using "on" binds the listener to the scope of the currentTarget by default
+            // in this case that means it executes in the scope of the button.
+            $(document).on("keydown", function(e) {
+
+				switch (e.which || e.keyCode) {
+					case 39: // right arrow key
+						Scene.move(-10);
+						//console.log(window.viewport.x);
+					break;
+
+					case 37: // left arrow key
+						Scene.move(10);
+						//console.log(window.viewport.x);
+					break;
+				}
+
+            });
 
 		},
 
@@ -89,13 +95,13 @@ define('Play',[
 
 				case "explore":
 				//
-				this.initHills(stage);
-				console.log('explore scene');
+				//this.initHills(stage);
+				
 				break;
 
 				case "feed":
 				//
-				this.initHills(stage);
+				//this.initHills(stage);
 				break;
 
 				case "review":
@@ -106,38 +112,7 @@ define('Play',[
 
 			}
 
-			this.initClouds(stage);	
-
-		},
-
-	
-		initHills: function(stage) {
-
-			// create the cloud layer			
-			this.hillsLayerMed = new Hills(this.assets['hills_med'], stage);
-
-			// this.hillsLayerClose = new Hills(this.assets['hills_close'], stage);
-
-			// this.hillsLayerFar = new Hills(this.assets['hills_far'], stage);
-			
-			// add the cloud layer to stage
-			stage.addChild(this.hillsLayerMed.graphics);
-
-			// animate the cloud layer 
-			// this.hillsLayerMed.animate(stage.canvas.width);	
-
-		},
-
-		initClouds: function(stage) {
-
-			// create the cloud layer			
-			this.cloudLayer = new Clouds(this.assets['clouds'], stage);
-			
-			// add the cloud layer to stage
-			stage.addChild(this.cloudLayer.graphics);
-
-			// animate the cloud layer 
-			this.cloudLayer.animate(stage.canvas.width);	
+			//this.initClouds(stage);	
 
 		},
 
@@ -146,12 +121,24 @@ define('Play',[
 		},
 		tick : function(event){
 
+			var newX = Scene.get('viewport-x');
+
+			var difX = Scene.get('target-x') - newX;
+			var easing = 10;
+
+			newX += difX / easing;
+
+			Scene.set('viewport-x', Math.round(newX));
+
+			this.cloudLayer.update();
+			this.cloudLayer.render();
+
 			for(var i in this.parallaxLayers){
 				this.parallaxLayers[i].update();
 				this.parallaxLayers[i].render();
 			}	
 
-			this.viewport.x += 1;
+			//this.viewport.x += 1;
 
 
 			this.stage.update(event);

@@ -1,71 +1,80 @@
 define('App', [
 	'jquery',	
 	'Preloader',
+	'Scene',
 	'Play',
 	'create'
-], function($, Preloader, Play){
+], function($, Preloader, Scene, Play){
 	var App;
 
 	App = {
 		initialize : function(){		
-
-
 			/*********************************************************************************/
 			/* Debug                                                                         */
 			/*********************************************************************************/
 
-			// if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-			//     document.write('<script src="http://jsconsole.com/remote.js?A59D6C66-CAC6-4451-AD9D-FA48E363EB20"></script>');    
-			// }
-
-			/*********************************************************************************/
-			/* CSS Framework                                                                 */
-			/*********************************************************************************/
-
-			// var _settings = {
-
-			// 	// skelJS
-			// 	skelJS: {
-			// 		prefix: 'css/screen',
-			// 		resetCSS: true,
-			// 		boxModel: 'border',
-			// 		containers: 1200,
-			// 		useOrientation: true,
-			// 		breakpoints: {
-			// 		'widest': { range: '*', containers: 1360, grid: { gutters: 50 }, hasStyleSheet: false },
-			// 		'wide': { range: '-1680', containers: 1200, grid: { gutters: 40 } },
-			// 		'normal': { range: '-1280', containers: 960, grid: { gutters: 30 }, lockViewport: true },
-			// 		'narrow': { range: '-1000', containers: '100%', grid: { gutters: 25, collapse: true }, lockViewport: true },
-			// 		'mobile': { range: '-640', containers: '100%', grid: { gutters: 10, collapse: true }, lockViewport: true }
-			// 		}
-			// 	}
-
-			// };
-
-			// // skelJS
-			// skel.init(_settings.skelJS);  
-
+			if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+			    //document.write('<script src="http://jsconsole.com/remote.js?A59D6C66-CAC6-4451-AD9D-FA48E363EB20"></script>');    
+			}
 
 			/*********************************************************************************/
 			/* Canvas Initialization                                                         */
 			/*********************************************************************************/
-
+		
 			var that = this;
 
+			this.percent = document.getElementById('loadingPercent');
+			this.wrapper = document.getElementById('canvasWrapper');				
 			this.canvas = document.getElementById("mainCanvas");
-        	this.stage = new createjs.Stage(this.canvas);
-        	this.stage.autoClear = true;
-        	this.viewport = {x: 0, y: 0};
+			this.stage = new createjs.Stage(this.canvas);
+			this.stage.autoClear = true;
+			this.stage.canvas.width = 1360;
+			this.stage.canvas.height = 720;
+		
+
+
+			this.properties = {
+				"canvas" : this.canvas,
+				"stage" : this.stage,
+				"viewport-x" : 0,
+				"viewport-y" : 0,
+				"target-x" : 0,
+				"target-y" : 0,
+				"left-boundary" : -2000,
+				"right-boundary" : 20000
+			}
+
+			Scene.properties(this.properties)
+
+			
 
 			createjs.Touch.enable(this.stage);
+
+			window.addEventListener("resize", this.setSize, false);
 
 			//start preloader
 			Preloader.enter(this.canvas, this.stage);		
 
+
+			Preloader.loader.on("progress", function(event) {
+				
+				var perc = Math.round(event.loaded*100) + '%';
+				that.percent.innerHTML = perc;
+
+			});
+
 			Preloader.loader.on("complete", function(assets) {
 
-				that.assets = Preloader.assets;			
-				that.gotoPlay();
+				that.percent.className += " hide";
+
+				that.assets = Preloader.assets;	
+
+				that.wrapper.className += " show";
+
+				that.setSize();	
+	
+				that.gotoPlay();       	
+	        
 			});
 
 		},
@@ -73,6 +82,23 @@ define('App', [
 			var that = this;
 			//start Play state
 			Play.enter(this.canvas, this.stage, this.assets, this.viewport);		
+		},
+		setSize : function() {
+
+			
+
+			
+
+			var s = Scene.get('stage');
+			var w = s.canvas.width = this.wrapper.offsetWidth;
+			var h = s.canvas.height = this.wrapper.offsetHeight;
+
+			console.log('resizing: ' + w + ' ' + h);
+
+
+			//Do Something
+			s.clear();
+			s.update();
 		}
 
 	}
