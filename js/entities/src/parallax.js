@@ -1,10 +1,11 @@
-define('Parallax',[	
-	'Scene',
+define('Parallax',[
 	'create'
 ], function(Scene){
 	var Parallax;
 
-	Parallax = function(x, y, child, offset, easing, loop){
+	Parallax = function(scene, x, y, child, offset, easing, loop){
+
+		this.scene = scene;
 		this.x = x || 0;
 		this.y = y || 0;
 		this.offset = offset || 1.2;
@@ -44,7 +45,7 @@ define('Parallax',[
 			if (this.loop) {
 
 				this.bitmapA = child.graphics;
-				this.bitmapB = child.graphics.clone(true);			
+				this.bitmapB = child.graphics;	
 			}
 
 		} else if (isImg)  {
@@ -62,20 +63,22 @@ define('Parallax',[
 		} // its an  image, create a bitmap
 
 
+		// positioning + offset
 		if (this.loop) {
 
 			this.bitmapA.x = this.x;
 			this.bitmapB.x = this.x-this.width;
-
+			
 			this.graphics.addChild(this.bitmapA, this.bitmapB);
+			this.graphics.x = child.x;
+			this.graphics.y = child.y;
 		}
 
-		else {
-
+		else {				
 			this.graphics.addChild(this.bitmapA);
+			this.graphics.x = child.x;
+			this.graphics.y = child.y;
 		}
-
-
 
 		//this.bitmapA.cache(0,0,this.width, this.height);
 
@@ -93,10 +96,9 @@ define('Parallax',[
 		tick: function() {
 
 			//keep accelerating the x velocity	
-			var vX = Scene.viewport.x();
+			var vX = this.scene.viewport.x();
+
 			this.targetX = vX * this.offset;
-
-
 
 			// this.x = Math.round(this.targetX);
 			this.deltaX = this.targetX - this.x;
@@ -132,10 +134,6 @@ define('Parallax',[
 			else {
 				this.bitmapA.x = this.targetX;
 			}	
-
-			var vX = Scene.viewport.x();
-			var vW = Scene.viewport.width();
-
 
 		}
 		

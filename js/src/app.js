@@ -2,9 +2,8 @@ define('App', [
 	'jquery',	
 	'Preloader',
 	'Scene',
-	'Play',
 	'create'
-], function($, Preloader, Scene, Play){
+], function($, Preloader, Scene){
 	var App;
 
 	App = {
@@ -28,7 +27,9 @@ define('App', [
 			this.canvas = document.getElementById("mainCanvas");
 			this.stage = new createjs.Stage(this.canvas);
 			this.stage.autoClear = true;
-			this.stage.enableDOMEvents(true);
+	
+			this.stage.enableMouseOver(20);
+
 			createjs.Touch.enable(this.stage);
 
 			this.properties = {
@@ -51,30 +52,27 @@ define('App', [
 			window.addEventListener("resize", this.setSize, false);
 
 			//start preloader
-			Preloader.enter(this.canvas, this.stage);		
+			Preloader.initialize(this.canvas, this.stage);		
 
 
 			Preloader.loader.on("progress", function(event) {
 				
 				var perc = Math.round(event.loaded*100) + '%';
-				// that.percent.innerHTML = perc;
-
-				$('#loadingPercent').html(perc);
+				that.percent.innerHTML = perc;
+				console.log(perc);
+				// that.percent.html(perc);
 
 			});
 
-			Preloader.loader.on("complete", function(assets) {
+			Preloader.loader.on("complete", function(assets) {				
 
-				
+				// that.percent.addClass('hide');
+				// that.canvas.addClass('show');
+				console.log('Loading Complete!');
+				that.percent.className += " hide";
+				that.wrapper.className += " show";
 
-				$('#loadingPercent').addClass('hide');
-				$('#canvasWrapper').addClass('show');
-
-				// that.percent.className += " hide";
-				// that.wrapper.className += " show";
-
-				that.assets = Preloader.assets;	
-	
+				Scene.assets = that.assets = Preloader.assets;		
 					
 				that.start();       	
 	        
@@ -83,11 +81,7 @@ define('App', [
 		},
 		start : function(){
 
-			var that = this;
-			//start Play state
-			Play.enter(this.canvas, this.stage, this.assets, this.viewport);	
-
-			//Scene.goto("explore");
+			Scene.enter('explore');	
 
 		},
 		setSize : function() {

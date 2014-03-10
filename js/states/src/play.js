@@ -1,11 +1,12 @@
 define('Play',[
 	'Clouds',
 	'Hills',
+	'Bale',
 	'Parallax',
 	'Hammer',
 	'Scene',
 	'create'
-], function(Clouds, Hills, Parallax, Hammer, Scene) {
+], function(Clouds, Hills, Bale, Parallax, Hammer, Scene) {
 	var Play;
 
 	Play = {
@@ -24,29 +25,31 @@ define('Play',[
 
 			this.parallaxLayers = [];
 
-
-
 			// for (var i = 0; i < 10; i++) {
 
 			// 	name = 'hay_' + i;
 
 			// stage.canvas.height - 
 
-			var hills_far = this.assets['hills_far'];
-			var hills_med = this.assets['hills_med'];
-
-			var hay = this.assets['hay'];
+			var hillsFarImage = Scene.assets['hillsFar'];
+			var hillsMedImage = Scene.assets['hillsMed'];
+			var baleImage = Scene.assets['bale'];
+			var cloudImage = Scene.assets['clouds'];
+			window.disableScroll = false;
 			var s = Scene.get('stage');
 
-			that.parallaxLayers['hay'] = new Parallax(0, 600, this.assets['hay'], 1, 10); // x, y, image, offset, easing
-			that.parallaxLayers['hill_med'] = new Parallax(0, parseInt(s.canvas.height - hills_med.height), hills_med, 1, 10, true); // x, y, image, offset, easing, loop\
-			that.parallaxLayers['hill_far'] = new Parallax(-2000, parseInt(s.canvas.height - hills_far.height) - 25, hills_far, .5, 10, true); // x, y, image, offset, easing, loop\
+			// that.parallaxLayers['hay'] = new Parallax(0, 600, this.assets['hay'], 1, 10); // x, y, image, offset, easing
+			that.parallaxLayers['hillMed'] = new Parallax(0, parseInt(s.canvas.height - hillsMedImage.height), hillsMedImage, 1, 10, true); // x, y, image, offset, easing, loop\
+			that.parallaxLayers['hillFar'] = new Parallax(-2000, parseInt(s.canvas.height - hillsFarImage.height) - 25, hillsFarImage, .5, 10, true); // x, y, image, offset, easing, loop\
 
-			this.cloudLayer = new Clouds(this.assets['clouds']);
+			this.cloudLayer = new Clouds(cloudImage);
+
+			this.baleLayer = new Bale(700,600, baleImage);
+
+			that.parallaxLayers['bale'] = new Parallax(0, 0, this.baleLayer, 1, 10); // x, y, image, offset, easing, loop
 
 
-
-			that.parallaxLayers['clouds'] = new Parallax(0, 0, this.cloudLayer, .5, 10); // x, y, image, offset, easing, loop\
+			that.parallaxLayers['clouds'] = new Parallax(0, 0, this.cloudLayer, .5, 10); // x, y, image, offset, easing, loop
 
 			
 			// cont = new createjs.Container();
@@ -56,9 +59,9 @@ define('Play',[
 			stage.addChild(
 				// this.cloudLayer.graphics,
 				this.parallaxLayers['clouds'].graphics,
-				this.parallaxLayers['hill_far'].graphics,
-				this.parallaxLayers['hill_med'].graphics,
-				this.parallaxLayers['hay'].graphics
+				this.parallaxLayers['hillFar'].graphics,
+				this.parallaxLayers['hillMed'].graphics,
+				this.baleLayer.graphics
 				
 			);
 
@@ -70,11 +73,21 @@ define('Play',[
 		addHooks: function () {
 
 			Hammer(document).on("swipeleft", function(event) {
-				Scene.viewport.nudge(-1000);
+				if (!window.disableScroll) {
+					Scene.viewport.nudge(-1000);
+				} else {
+					event.preventDefault();
+				}
 			});
 
 			Hammer(document).on("swiperight", function(event) {
-				Scene.viewport.nudge(1000);		
+
+				if (!window.disableScroll) {
+					Scene.viewport.nudge(1000);		
+				}
+				else {
+					event.preventDefault();
+				}
 			});
 
 			  // using "on" binds the listener to the scope of the currentTarget by default

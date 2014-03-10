@@ -1,6 +1,4 @@
-define('Clouds',[	
-	'create'
-], function(){
+define('Clouds', function(){
 	var Clouds;
 
 	Clouds = function(image){
@@ -36,15 +34,11 @@ define('Clouds',[
 
 
 			this.bitmapA.x += this.speed;
-			this.bitmapB.x += this.speed;
+			this.bitmapB.x += this.speed;	
 
-
-			if (this.bitmapA.x > this.width) {
-				this.bitmapA.x = 0;
-			}
-
-			if (this.bitmapB.x > this.width) {
-				this.bitmapB.x = 0;
+			if (this.bitmapA > this.width) {
+				this.bitmapA = 0;
+				this.bitmapB = 0;
 			}
 
 		}

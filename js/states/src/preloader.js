@@ -6,13 +6,13 @@ define('Preloader', [
 
 	var assetManifest = [
 		{id: "clouds", src:"img/clouds_loop.png"},
-		{id: "hills_med", src:"img/hill_med.png"},
-		{id: "hills_far", src:"img/hill_far.png"},
-		{id: "hay", src:"img/hay_blank.jpg"}
+		{id: "hillsMed", src:"img/hill_med.png"},
+		{id: "hillsFar", src:"img/hill_far.png"},
+		{id: "bale", src:"img/bale.jpg"}
 	];
 
 	Preloader = {
-		enter : function(canvas, stage){
+		initialize : function(canvas, stage){
 			var that = this;
 
 			this.stage = stage;
