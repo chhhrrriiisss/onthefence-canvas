@@ -15,7 +15,6 @@ define('Scene',[
 		// goes to target scene
 		goto: function(targetScene) {
 
-
 		},
 
 		// sets a 'global' app value
@@ -26,7 +25,6 @@ define('Scene',[
 
 		// gets a 'global' app value
 		get: function(tag) {
-
 			
 			return this.properties[tag];
 

@@ -32,19 +32,12 @@ define('Clouds',[
 
 	Clouds.prototype = {
 
-		animate : function(w) {
+		tick: function() {
 
-	
-			//createjs.Tween.get(this.graphics, {loop:true}).to({x:this.width}, 30000);
 
-		},		
-		update : function(){
 			this.bitmapA.x += this.speed;
 			this.bitmapB.x += this.speed;
 
-			//createjs.Tween.get(this.graphics, {loop:true}).to({x:this.width}, 30000);
-		},
-		render : function(){
 
 			if (this.bitmapA.x > this.width) {
 				this.bitmapA.x = 0;
@@ -54,8 +47,6 @@ define('Clouds',[
 				this.bitmapB.x = 0;
 			}
 
-			// this.graphics.x = this.x;
-			// this.graphics.y = this.y;			
 		}
 	}	
 

@@ -4,7 +4,7 @@ define('Parallax',[
 ], function(Scene){
 	var Parallax;
 
-	Parallax = function(x, y, image, offset, easing, loop){
+	Parallax = function(x, y, child, offset, easing, loop){
 		this.x = x || 0;
 		this.y = y || 0;
 		this.offset = offset || 1.2;
@@ -12,19 +12,57 @@ define('Parallax',[
 		this.targetX = 0;
 		this.deltaX = 0;
 		this.loop = loop || false;
+		this.child = child;	
 
-		this.width = image.width;
-		this.height = image.height;
-		this.outside = -this.width;		
+		isImg = true;
+
+		try {
+
+			isImg = (child.nodeName.toLowerCase() === 'img');
+
+		}
+		catch (error) {
+			isImg = false;
 
 
+		}
 
 		this.graphics = new createjs.Container();
-		
+
+		if (!isImg) { //its an object
+
+			this.bitmapA = child.graphics; 
+			this.width = child.graphics.width;
+			this.height = child.graphics.height;
+
+			
+			// if (typeof image.prototype.tick == 'function') { 
+
+			//console.log(image.tick());
+
+
+			if (this.loop) {
+
+				this.bitmapA = child.graphics;
+				this.bitmapB = child.graphics.clone(true);			
+			}
+
+		} else if (isImg)  {
+
+			this.bitmapA = new createjs.Bitmap(child);
+			this.width = child.width;
+			this.height = child.height;
+
+			if (this.loop) {
+
+				this.bitmapA = new createjs.Bitmap(child);
+				this.bitmapB = new createjs.Bitmap(child);
+			}
+
+		} // its an  image, create a bitmap
+
 
 		if (this.loop) {
-			this.bitmapA =  new createjs.Bitmap(image);	
-			this.bitmapB =  new createjs.Bitmap(image);	
 
 			this.bitmapA.x = this.x;
 			this.bitmapB.x = this.x-this.width;
@@ -33,7 +71,7 @@ define('Parallax',[
 		}
 
 		else {
-			this.bitmapA =  new createjs.Bitmap(image);	
+
 			this.graphics.addChild(this.bitmapA);
 		}
 
@@ -52,27 +90,13 @@ define('Parallax',[
 
 	Parallax.prototype = {
 
-		update : function(){
+		tick: function() {
 
 			//keep accelerating the x velocity	
 			var vX = Scene.viewport.x();
 			this.targetX = vX * this.offset;
-			//console.log(Play.viewport.x);
-
-		},
-		render : function(){
-			// //if shapeA has moved completely off the left screen
-			// if((window.viewport.x % this.width) > 1 && this.loop){
-			// 	//console.log('LOOPING!!');
-		 //        //move it to the back of shapeB
-			// 	var temp = this.bitmapA;
-			// 	temp.x = this.bitmapB.x+this.width;
-		 //        //switch shapeA to shapeB and shapeB to shapeA
-			// 	this.bitmapA = this.bitmapB;
-			// 	this.bitmapB = temp;
 
 
-	
 
 			// this.x = Math.round(this.targetX);
 			this.deltaX = this.targetX - this.x;
@@ -113,23 +137,8 @@ define('Parallax',[
 			var vW = Scene.viewport.width();
 
 
-			
-			// console.log(vX - this.bitmapA.x);
-
-			// if (  this.bitmapA.x > ( vX + vW ) ) {
-				
-			// 	this.bitmapA.x = this.x-this.width;
-				
-			// } // SEND BEHIND BITMAP B
-	
-
-			// if (this.loop) {
-
-			// 	this.bitmapB.x += Math.round(this.deltaX);
-			// }
-
-			//console.log(this.graphics.x);
 		}
+		
 	}	
 
 	return Parallax;

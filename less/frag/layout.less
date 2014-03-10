@@ -121,6 +121,8 @@ textarea {
   .transition(all .3s);
   text-align:center;
 
+  position:fixed;
+
   &.hide {  
       .opacity(0);
       z-index:-1;
@@ -134,10 +136,12 @@ textarea {
     height:100%;
     max-width:1360px;
     max-height:720px;
-    .absoluteCenter();
+
     .cssPerformance();
     .transition(all .3s);
     .grassGradient();
+    .absoluteCenter();
+    position:fixed;
 
     &.show {    
 

@@ -36,21 +36,26 @@ define('Play',[
 			var hills_med = this.assets['hills_med'];
 
 			var hay = this.assets['hay'];
-			var s = Scene.get('stage').canvas;
+			var s = Scene.get('stage');
+
+			that.parallaxLayers['hay'] = new Parallax(0, 600, this.assets['hay'], 1, 10); // x, y, image, offset, easing
+			that.parallaxLayers['hill_med'] = new Parallax(0, parseInt(s.canvas.height - hills_med.height), hills_med, 1, 10, true); // x, y, image, offset, easing, loop\
+			that.parallaxLayers['hill_far'] = new Parallax(-2000, parseInt(s.canvas.height - hills_far.height) - 25, hills_far, .5, 10, true); // x, y, image, offset, easing, loop\
+
+			this.cloudLayer = new Clouds(this.assets['clouds']);
 
 
-			that.parallaxLayers['hay'] = new Parallax(0, 600, this.assets['hay'], 1, 10, true); // x, y, image, offset, easing
-			that.parallaxLayers['hill_med'] = new Parallax(0, parseInt(s.height - hills_med.height), hills_med, 1, 10, true); // x, y, image, offset, easing, loop\
-			that.parallaxLayers['hill_far'] = new Parallax(-2000, parseInt(s.height - hills_far.height) - 25, hills_far, .5, 10, true); // x, y, image, offset, easing, loop\
+
+			that.parallaxLayers['clouds'] = new Parallax(0, 0, this.cloudLayer, .5, 10); // x, y, image, offset, easing, loop\
 
 			
 			// cont = new createjs.Container();
 
-			this.cloudLayer = new Clouds(this.assets['clouds']);
+			
 			
 			stage.addChild(
-				this.cloudLayer.graphics,
-
+				// this.cloudLayer.graphics,
+				this.parallaxLayers['clouds'].graphics,
 				this.parallaxLayers['hill_far'].graphics,
 				this.parallaxLayers['hill_med'].graphics,
 				this.parallaxLayers['hay'].graphics
@@ -97,16 +102,18 @@ define('Play',[
 		},
 		tick : function(event){
 
-
-			Scene.update();
+			Scene.update(event);
 			Scene.render();
 
-			this.cloudLayer.update();
-			this.cloudLayer.render();
+			//this.cloudLayer.update();
+
+			// this.cloudLayer.update();
+			// this.cloudLayer.render();
+
+			this.cloudLayer.tick();
 
 			for(var i in this.parallaxLayers){
-				this.parallaxLayers[i].update();
-				this.parallaxLayers[i].render();
+				this.parallaxLayers[i].tick();
 			}	
 			
 			this.stage.update(event);

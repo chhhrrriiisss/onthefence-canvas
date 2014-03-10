@@ -13,9 +13,9 @@ define('App', [
 			/* Debug                                                                         */
 			/*********************************************************************************/
 
-			if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-			    document.write('<script src="http://jsconsole.com/remote.js?A59D6C66-CAC6-4451-AD9D-FA48E363EB20"></script>');    
-			}
+			// if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+			//     document.write('<script src="http://jsconsole.com/remote.js?A59D6C66-CAC6-4451-AD9D-FA48E363EB20"></script>');    
+			// }
 
 			/*********************************************************************************/
 			/* Canvas Initialization                                                         */
@@ -23,14 +23,14 @@ define('App', [
 		
 			var that = this;
 
-			that.percent = document.getElementById('loadingPercent');
-			that.wrapper = document.getElementById('canvasWrapper');				
-			that.canvas = document.getElementById("mainCanvas");
+			this.percent = document.getElementById('loadingPercent');
+			this.wrapper = document.getElementById('canvasWrapper');				
+			this.canvas = document.getElementById("mainCanvas");
 			this.stage = new createjs.Stage(this.canvas);
 			this.stage.autoClear = true;
-			this.stage.canvas.width = 1360;
-			this.stage.canvas.height = 720;
-		
+			this.stage.enableDOMEvents(true);
+			createjs.Touch.enable(this.stage);
+
 			this.properties = {
 				"canvas" : this.canvas,
 				"stage" : this.stage,
@@ -47,9 +47,7 @@ define('App', [
 			Scene.initialize(this.properties);
 
 			this.setSize();	
-
-			createjs.Touch.enable(this.stage);
-
+				
 			window.addEventListener("resize", this.setSize, false);
 
 			//start preloader
@@ -59,14 +57,21 @@ define('App', [
 			Preloader.loader.on("progress", function(event) {
 				
 				var perc = Math.round(event.loaded*100) + '%';
-				that.percent.innerHTML = perc;
+				// that.percent.innerHTML = perc;
+
+				$('#loadingPercent').html(perc);
 
 			});
 
 			Preloader.loader.on("complete", function(assets) {
 
-				that.percent.className += " hide";
-				that.wrapper.className += " show";
+				
+
+				$('#loadingPercent').addClass('hide');
+				$('#canvasWrapper').addClass('show');
+
+				// that.percent.className += " hide";
+				// that.wrapper.className += " show";
 
 				that.assets = Preloader.assets;	
 	
@@ -89,13 +94,12 @@ define('App', [
 
 			var s = Scene.get('stage');
 			var ratio = Scene.get('aspect-ratio');
-			var w = s.canvas.width = this.wrapper.offsetWidth;
-			var h = s.canvas.height = Math.round(s.canvas.width * ratio);
+			var w = $('#canvasWrapper').outerWidth();
+			var h = Math.round(w * ratio);
 
-			Scene.set('width', w);
-			Scene.set('height', h);
-
-			console.log('resizing: ' + w + ' ' + h);
+			s.canvas.width = w;
+			s.canvas.height = h;
+			console.log('resizing: ' + s.canvas.width + ' ' + s.canvas.height);
 
 
 			//Do Something

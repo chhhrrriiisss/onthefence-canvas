@@ -29,7 +29,8 @@ requirejs.config({
 	urlArgs : "bust="+(new Date()).getTime()
 });
 
-require(['App', 'domReady' ], function(App) {
+require(['App'], function(App) {
+
 
 	App.initialize();	
 
