@@ -126,6 +126,8 @@ textarea {
       z-index:-1;
   }
 }
+
+
 #canvasWrapper {
 
     width:100%;
@@ -134,28 +136,40 @@ textarea {
     max-height:720px;
     .absoluteCenter();
     .cssPerformance();
-    .opacity(0);
     .transition(all .3s);
+    .grassGradient();
 
-    &.show {  
-      .opacity(100);
+    &.show {    
 
+       .skyGradient();  
+
+        #mainCanvas {
+           .opacity(100);
+        }
     }
+
+
+    #mainCanvas {
+
+        width:100%;
+        height:100%;
+
+        /*    max-width:1360px;
+        max-height:720px;
+
+        min-height:360px;
+        min-width:630px;
+
+        */  
+        .cssPerformance();
+        .opacity(0);
+        .transition(all .3s);
+
+      
+
+        }
 }
 
-#mainCanvas {
-    width:100%;
-    height:100%;
-
-/*    max-width:1360px;
-    max-height:720px;
-
-    min-height:360px;
-    min-width:630px;
-
-*/  .cssPerformance();
-    .skyGradient();
-}
 
 
 

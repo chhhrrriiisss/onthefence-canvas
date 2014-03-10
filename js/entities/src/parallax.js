@@ -15,17 +15,39 @@ define('Parallax',[
 
 		this.width = image.width;
 		this.height = image.height;
-		this.outside = -this.width;				
+		this.outside = -this.width;		
+
+
 
 		this.graphics = new createjs.Container();
 		
-		this.bitmapA =  new createjs.Bitmap(image);	
-		this.bitmapA.cache(0,0,this.width, this.height);
-		this.graphics.addChild(this.bitmapA);
 
+		if (this.loop) {
+			this.bitmapA =  new createjs.Bitmap(image);	
+			this.bitmapB =  new createjs.Bitmap(image);	
+
+			this.bitmapA.x = this.x;
+			this.bitmapB.x = this.x-this.width;
+
+			this.graphics.addChild(this.bitmapA, this.bitmapB);
+		}
+
+		else {
+			this.bitmapA =  new createjs.Bitmap(image);	
+			this.graphics.addChild(this.bitmapA);
+		}
+
+
+
+		//this.bitmapA.cache(0,0,this.width, this.height);
+
+		
 
 		this.graphics.x = this.x;
-		this.graphics.y = this.y;		
+		this.graphics.y = this.y;
+		
+		
+
 	};
 
 	Parallax.prototype = {
@@ -35,7 +57,6 @@ define('Parallax',[
 			//keep accelerating the x velocity	
 			var vX = Scene.viewport.x();
 			this.targetX = vX * this.offset;
-
 			//console.log(Play.viewport.x);
 
 		},
@@ -51,11 +72,56 @@ define('Parallax',[
 			// 	this.bitmapB = temp;
 
 
-			// }
+	
+
+			// this.x = Math.round(this.targetX);
+			this.deltaX = this.targetX - this.x;
+			this.x = this.targetX;
+
+			if (this.loop) {
+
+				this.bitmapA.x += this.deltaX;
+				this.bitmapB.x += this.deltaX;
+
+				if ( this.bitmapA.x < 0) {
+				// left
+					this.bitmapB.x = this.bitmapA.x + this.width;
+				} 
+
+				if ( this.bitmapB.x < 0) {
+				// left
+					this.bitmapA.x = this.bitmapB.x + this.width;
+				} 
+
+				if ( this.bitmapB.x > 0) {
+				// left
+					this.bitmapA.x = this.bitmapB.x - this.width;
+				} 
+
+				if ( this.bitmapA.x > 0) {
+				// left
+					this.bitmapB.x = this.bitmapA.x - this.width;
+				} 
+
+				//console.log(this.bitmapA.x + this.width);
+			}
+			else {
+				this.bitmapA.x = this.targetX;
+			}	
+
+			var vX = Scene.viewport.x();
+			var vW = Scene.viewport.width();
+
+
 			
-			//this.deltaX = (this.targetX - this.bitmapA.x) / this.easing;
-			this.bitmapA.x = Math.round(this.targetX);
-		
+			// console.log(vX - this.bitmapA.x);
+
+			// if (  this.bitmapA.x > ( vX + vW ) ) {
+				
+			// 	this.bitmapA.x = this.x-this.width;
+				
+			// } // SEND BEHIND BITMAP B
+	
 
 			// if (this.loop) {
 

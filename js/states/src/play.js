@@ -34,17 +34,23 @@ define('Play',[
 
 			var hills_far = this.assets['hills_far'];
 			var hills_med = this.assets['hills_med'];
+
 			var hay = this.assets['hay'];
-		
-			that.parallaxLayers['hay'] = new Parallax(0, 600, this.assets['hay'], 1, 10); // x, y, image, offset, easing
-			that.parallaxLayers['hill_med'] = new Parallax(0, parseInt(this.stage.canvas.height - hills_med.height), hills_med, 1, 10, true); // x, y, image, offset, easing, loop\
-			that.parallaxLayers['hill_far'] = new Parallax(-2000, parseInt(this.stage.canvas.height - hills_far.height) - 25, hills_far, .5, 10, true); // x, y, image, offset, easing, loop\
+			var s = Scene.get('stage').canvas;
+
+
+			that.parallaxLayers['hay'] = new Parallax(0, 600, this.assets['hay'], 1, 10, true); // x, y, image, offset, easing
+			that.parallaxLayers['hill_med'] = new Parallax(0, parseInt(s.height - hills_med.height), hills_med, 1, 10, true); // x, y, image, offset, easing, loop\
+			that.parallaxLayers['hill_far'] = new Parallax(-2000, parseInt(s.height - hills_far.height) - 25, hills_far, .5, 10, true); // x, y, image, offset, easing, loop\
+
+			
 			// cont = new createjs.Container();
 
 			this.cloudLayer = new Clouds(this.assets['clouds']);
 			
 			stage.addChild(
 				this.cloudLayer.graphics,
+
 				this.parallaxLayers['hill_far'].graphics,
 				this.parallaxLayers['hill_med'].graphics,
 				this.parallaxLayers['hay'].graphics

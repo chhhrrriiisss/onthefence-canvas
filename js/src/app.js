@@ -23,9 +23,9 @@ define('App', [
 		
 			var that = this;
 
-			this.percent = document.getElementById('loadingPercent');
-			this.wrapper = document.getElementById('canvasWrapper');				
-			this.canvas = document.getElementById("mainCanvas");
+			that.percent = document.getElementById('loadingPercent');
+			that.wrapper = document.getElementById('canvasWrapper');				
+			that.canvas = document.getElementById("mainCanvas");
 			this.stage = new createjs.Stage(this.canvas);
 			this.stage.autoClear = true;
 			this.stage.canvas.width = 1360;
@@ -34,6 +34,7 @@ define('App', [
 			this.properties = {
 				"canvas" : this.canvas,
 				"stage" : this.stage,
+				"aspect-ratio" : 0.52,
 				"viewport-x" : 0,
 				"viewport-y" : 0,
 				"target-x" : 0,
@@ -44,6 +45,8 @@ define('App', [
 			}
 
 			Scene.initialize(this.properties);
+
+			this.setSize();	
 
 			createjs.Touch.enable(this.stage);
 
@@ -63,13 +66,11 @@ define('App', [
 			Preloader.loader.on("complete", function(assets) {
 
 				that.percent.className += " hide";
-
-				that.assets = Preloader.assets;	
-
 				that.wrapper.className += " show";
 
-				that.setSize();	
+				that.assets = Preloader.assets;	
 	
+					
 				that.start();       	
 	        
 			});
@@ -87,8 +88,12 @@ define('App', [
 		setSize : function() {
 
 			var s = Scene.get('stage');
+			var ratio = Scene.get('aspect-ratio');
 			var w = s.canvas.width = this.wrapper.offsetWidth;
-			var h = s.canvas.height = this.wrapper.offsetHeight;
+			var h = s.canvas.height = Math.round(s.canvas.width * ratio);
+
+			Scene.set('width', w);
+			Scene.set('height', h);
 
 			console.log('resizing: ' + w + ' ' + h);
 

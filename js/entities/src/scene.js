@@ -67,6 +67,11 @@ define('Scene',[
 				return Scene.properties['viewport-y'];
 			},
 
+			width: function() {
+
+				return Scene.properties['width'];
+			},
+
 			targetX: function() {
 
 				return Scene.properties['target-x'];
