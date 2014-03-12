@@ -36,6 +36,7 @@ define('Parallax',[
 			this.width = child.graphics.width;
 			this.height = child.graphics.height;
 
+
 			
 			// if (typeof image.prototype.tick == 'function') { 
 

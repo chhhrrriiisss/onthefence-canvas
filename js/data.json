@@ -1,0 +1,127 @@
+[
+    {
+        "category": "Trade",
+        "s1": "Paying higher prices helps developing countries make better trading conditions and promotes sustainability",
+        "s2": "In order to make goods cheap, they need to be made somewhere with a cheaper labour force. "
+    },
+    {
+        "category": "Economy",
+        "s1": "Protect the services and resources that the Government looks after, they will be worth more in the long term.",
+        "s2": "Sell things that belong to the Government to businesses for a quick profit. "
+    },
+    {
+        "category": "Education",
+        "s1": "Free education from the Goverment, where everyone has equal opportunities. The most important thing is to ask questions.",
+        "s2": "It's up to the individual to get educated, not the Government. The most important thing is to succeed at whatever you study."
+    },
+    {
+        "category": "Energy",
+        "s1": "Power should come from renewable resources. Research into future possibilities for different technology.",
+        "s2": "Keep the current power system going and maintain stability, while looking for natural resources to use as energy."
+    },
+    {
+        "category": "Defense",
+        "s1": "Keep NZ Nuclear Free",
+        "s2": "Cancel the ban on nuclear powered ships from NZ waters."
+    },
+    {
+        "category": "Environment",
+        "s1": "The natural environment is fragile and precious, we shouldn't tamper with it or abuse it.",
+        "s2": "In order to grow the economy, it means exporting resources from the natural environment."
+    },
+    {
+        "category": "Foreign Policy",
+        "s1": "Diplomacy based on mutual respect and trust is the best way to approach relations with other nations.",
+        "s2": "Develop relationships with key nations for mutual economic, military and political interests."
+    },
+    {
+        "category": "Health",
+        "s1": "Healing should be about getting the whole person well and making sure they're safe at home and work. The Government should pick up the bill.",
+        "s2": "Treatment should just be about the problem. Hospitals should be efficient at getting patients out to make room for others. Make Private hospitals an option for those who can afford."
+    },
+    {
+        "category": "Housing",
+        "s1": "Increasing government funded housing plans. Focusing on community growth.",
+        "s2": "Focusing on housing legislation reforms and development of urban areas."
+    },
+    {
+        "category": "Social Welfare",
+        "s1": "People should be able to receive monetary support from the Government through taxes to help those who need it.",
+        "s2": "People should be self-reliant and beneficiaries should educate themselves and get skills to re-renter the workforce."
+    },
+    {
+        "category": "Science and Research",
+        "s1": "Genetic technology is ok as long as it's kept in the lab and not in the food chain. Science can be used to explain the future.",
+        "s2": "It's ok for businesses to use technology for commercial gain. Science is most useful to explain the past."
+    },
+    {
+        "category": "Law",
+        "s1": "In order to serve everyone, laws can be changed to alter the way people live. Helping those with the smallest voice.",
+        "s2": "No-one should be able to interfere with my private life. Laws are there to maintain order."
+    },
+    {
+        "category": "Justice",
+        "s1": "Criminals are products of their environments. Prison should be about treatment and getting them back into society.",
+        "s2": "People become criminals because they want to be, and they should be punished."
+    },
+    {
+        "category": "Immigration",
+        "s1": "NZ is a political, cultural and religious sanctuary for all, there should be no discrimination.",
+        "s2": "Skilled migrants are the most useful ones, we shouldn't let too many people into the country because there won't be enough jobs."
+    },
+    {
+        "category": "Communications",
+        "s1": "The Internet should be available to everybody. Allowing more business competition means lower costs.",
+        "s2": "The Internet is potentially a dangerous breeding ground for social disharmony and Terrorism. A monopoly on Internet provision means stability."
+    },
+    {
+        "category": "Industrial Relations",
+        "s1": "Employees are the workforce of the economy, they deserve to be paid fairly and protected by law.",
+        "s2": "Employers run the businesses that keep the economy growing, they should have just as much rights as employees."
+    },
+    {
+        "category": "Transport",
+        "s1": "Public transport is important because there will be less environmental impact and it should be cheaper.",
+        "s2": "Private cars mean mobility and efficiency."
+    },
+    {
+        "category": "Tax",
+        "s1": "Tax the top earners and keep an eye on businesses so taxes can be distributed to the public through Government programs.",
+        "s2": "Businesses that are doing well financially should not be tampered with. Taxes should be easy for everyone."
+    },
+    {
+        "category": "Nuclear Policy",
+        "s1": "We should be open to renewing our stance on nuclear technology if it benefits our relationships abroad.",
+        "s2": "Keep New Zealand nuclear free."
+    },
+    {
+        "category": "Treaty of Waitangi",
+        "s1": "The Treaty of Waitangi (Te Tiriti o Waitangi) is a historical document that doesn't have much relevance to today's issues.",
+        "s2": "The Treaty of Waitangi (Te Tiriti o Waitangi) is a very important document which should guide the government. It is still important to correct past wrongs."
+    },
+    {
+        "category": "Arts and Heritage",
+        "s1": "Investing time and money into the Arts, our Film Industry and our heritage buildings protects our history and adds to the social, cultural and economic fabric of New Zealand.",
+        "s2": "We should be more future-minded about our buildings and culture. The Arts and Film Industry won't add much value to the New Zealand economy."
+    },
+    {
+        "category": "Sports and Recreation",
+        "s1": "Sport can be a big money earner, it's important to New Zealand culture and participation in sporting activities should be encouraged.",
+        "s2": "With obesity and other health problems affecting kiwis, government funding for professional athletes could be better spent elsewhere."
+    },
+    {
+        "category": "Te Ao Māori",
+        "s1": "Te Reo is an important language to New Zealand culture, everyone should have the opportunity to learn and speak it.",
+        "s2": "There is no commercial benefit to learning Te Reo, schooling should focus on a diverse range of language skills to reflect New Zealand's diversity."
+    },
+    {
+        "category": "Tourism",
+        "s1": "Tourism is a cornerstone industry in New Zealand. Advertising plays a crucial role and the government must do whatever it takes to maintain a 'clean, green' image to the world.",
+        "s2": "It is not worthwhile pursuing a 'green' image, we should be investing into other sources of income. Bio-security is difficult to maintain."
+    },
+    {
+        "category": "Civil Defence",
+        "s1": "Community support and funding for USAR and emergency services are vital, the most important consideration for natural disasters and emergencies is preparation.",
+        "s2": "The Earthquake Commission and governmental relationships with Insurance Companies are vital because the most important consideration for natural disasters and emergencies is the response."
+    }
+]

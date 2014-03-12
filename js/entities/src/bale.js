@@ -1,26 +1,27 @@
-define('Bale', function(){
+define('Bale', [
+	'fnc'
+
+], function(fnc){
 	var Bale;
 
-	Bale = function(x, y, image){
-		// INITIALIZE PROPERTIES	
-
+	Bale = function(x, y, image, string){
+		
+		// Defaults & Settings
 		var that = this;	
-
 		this.x = x || 0;
 		this.y = y || 0;
-
-
-
+		this.string = string || "";
 		this.defaultX = x;
 		this.defaultY = y;	
-
 		this.startY = -300;
-
 		this.width = image.width;
 		this.height = image.height;
 
-		this.graphics = new createjs.Container();		
+
+
+
 		
+		// Hay Bitmap
         this.bitmapA = new createjs.Bitmap(image);
         this.bitmapA.width = image.width;
         this.bitmapA.height = image.height;
@@ -33,24 +34,39 @@ define('Bale', function(){
         this.bitmapA.regX = (this.width/2);
         this.bitmapA.regY = (this.height/2);
 
-        this.bitmapA.rotation = 5 - Math.random()*10;
+   
+        // Text Label
+        this.string = fnc.splitLine(this.string, 11);
+        this.label = new createjs.Text(this.string, "21px Otari", "#9A5628");  
+        this.label.lineHeight = 0;
+        this.label.textAlign = "center";
+        this.label.textBaseline = "top";
+        this.label.shadow = new createjs.Shadow("rgba(0,0,0,.3)", -1, -1, 0);
+        bounds = this.label.getBounds();
+        this.label.y = -(bounds.height/2);
 
-        // this.graphics.width = this.width;
-        // this.graphics.height = this.height;
+        // Image Container
+		this.graphics = new createjs.Container();	
 
-        // this.graphics.x = this.x;
-        // this.graphics.y = this.startY;       
+		// // Group the image+label
+  //       this.bitmap = new createjs.Container();	
 
-		this.graphics.addChild(this.bitmapA);	
+  //       this.bitmap.addChild(this.bitmapA, this.label);	
 
-		this.bitmapA.cursor = "pointer";
+		this.graphics.addChild(this.bitmapA, this.label);	
+		this.graphics.rotation = 5 - Math.random()*10;
+		this.graphics.cursor = "pointer";
+
+		this.graphics.x = this.x;
+		this.graphics.y = this.y;
 		
 
 	// using "on" binds the listener to the scope of the currentTarget by default
 		// in this case that means it executes in the scope of the button.
 
 
-		this.bitmapA.on("pressup", function(evt) {			
+		this.graphics.on("pressup", function(evt) {			
+			
 
 			createjs.Tween.get(this).to({y: this.defaultY + ( -5 + Math.random() * 10 )}, 500, createjs.Ease.bounceOut);
 
@@ -58,7 +74,7 @@ define('Bale', function(){
 	
 		});
 
-		this.bitmapA.on("mousedown", function(evt) {
+		this.graphics.on("mousedown", function(evt) {
 
 			window.disableScroll = true;
 
@@ -67,7 +83,7 @@ define('Bale', function(){
 		});
 		
 		// the pressmove event is dispatched when the mouse moves after a mousedown on the target until the mouse is released.
-		this.bitmapA.on("pressmove", function(evt) {
+		this.graphics.on("pressmove", function(evt) {
 
 			window.disableScroll = true;
 
@@ -77,24 +93,20 @@ define('Bale', function(){
 			update = true;
 		});
 
-		this.bitmapA.on("rollover", function(evt) {
+		this.graphics.on("rollover", function(evt) {
 
 			window.disableScroll = true;
 
 			this.defaultY = this.y;
 			createjs.Tween.get(this).to({y: this.y -20, rotation: Math.random() * 2}, 100, createjs.Ease.Linear);
 
-
-
-			//this.scaleX = this.scaleY = this.scale*1.2;
 		});
 		
-		this.bitmapA.on("rollout", function(evt) {	
+		this.graphics.on("rollout", function(evt) {	
 			
 		
 			createjs.Tween.get(this).to({y: this.defaultY, rotation: Math.random() * 5}, 200, createjs.Ease.bounceOut);
 
-			//this.scaleX = this.scaleY = this.scale;
 			window.disableScroll = false;
 		});
 

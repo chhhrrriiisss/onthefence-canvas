@@ -23,19 +23,12 @@ requirejs.config({
 		'Bale' : 'entities/src/bale',
 
 		'domReady' : 'utils/domReady.min',
+		'fnc' : 'utils/src/fnc',
 
 		'App' : 'src/app'
 	},
 	urlArgs : "bust="+(new Date()).getTime(),
 	waitSeconds: 400
-});
-
-
-require(['Preloader'], function(Preloader) {
-
-	console.log('Preloader initializing...');
-	// App.initialize();	
-
 });
 
 require(['App'], function(App) {
@@ -54,3 +47,4 @@ requirejs.onError = function (err) {
         throw err;
     }   
 };
+
