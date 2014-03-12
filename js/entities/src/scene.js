@@ -2,9 +2,10 @@ define('Scene',[
 	'Clouds',
 	'Hills',
 	'Bale',
+	'Sheep',
 	'Parallax',
 	'Hammer'
-], function(Clouds, Hills, Bale, Parallax, Hammer) {
+], function(Clouds, Hills, Bale, Sheep, Parallax, Hammer) {
 	var Scene;
 
 	Scene = {
@@ -51,11 +52,12 @@ define('Scene',[
 			var rawData = this.assets['data'];
 			var data = [];
 
+
 			for (var key in rawData) {
 				var item = rawData[key];
 				data.push(item);			
 			}
-
+			
 			this.bales = new Object();
 			this.bales.graphics = new createjs.Container();
 
@@ -63,7 +65,7 @@ define('Scene',[
 
 				var cX = -4000 + Math.random() * 8000;
 				var cY = 550 + Math.random()*100;
-				bale = new Bale(cX,cY, baleImage, data[i].category);
+				bale = new Bale(cX,cY, baleImage, data[i]);
 				bale.x = cX;
 				bale.y = cY;
 
@@ -79,21 +81,24 @@ define('Scene',[
 			that.parallaxLayers['hillFar'] = new Parallax(this, -2000, parseInt(stage.canvas.height - hillsFarImage.height) - 25, hillsFarImage, .5, 10, true); // x, y, image, offset, easing, loop\
 
 			this.cloudLayer = new Clouds(cloudImage);
+			this.sheep = new Sheep( (stage.canvas.width/2), (stage.canvas.height/2) + 100, this.assets['sheep_face'], this.assets['sheep_body'], this.assets['sheep_legs']);
 			// this.baleLayer = new Bale(0,0, baleImage);
 		
 			that.parallaxLayers['bales'] = new Parallax(this, 1000, 600, this.bales, 1, 10); // x, y, image, offset, easing, loop
 			that.parallaxLayers['clouds'] = new Parallax(this, 0, 0, this.cloudLayer, .5, 10); // x, y, image, offset, easing, loop
+			that.parallaxLayers['sheep'] = new Parallax(this, 0, 0, this.sheep, 1.5, 10); // x, y, image, offset, easing, loop
 
-			
 			stage.addChild(
 				// this.cloudLayer.graphics,
 				this.parallaxLayers['clouds'].graphics,
 				this.parallaxLayers['hillFar'].graphics,
 				this.parallaxLayers['hillMed'].graphics,
-				that.parallaxLayers['bales'].child.graphics
+				that.parallaxLayers['bales'].child.graphics,
+				this.sheep.graphics
 			
 	
 			);
+
 
 			this.addHooks();
   
@@ -202,6 +207,7 @@ define('Scene',[
 			// this.cloudLayer.update();
 			// this.cloudLayer.render();
 
+			this.sheep.tick();
 			this.cloudLayer.tick();
 
 			for(var i in this.parallaxLayers){

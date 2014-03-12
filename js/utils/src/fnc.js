@@ -3,6 +3,15 @@ define('fnc', function(){
 
 	fnc = {
 
+		isMobile: function() {
+
+			if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+			    return true;
+			} else {
+				return false;
+			}
+		},
+
 		splitLine: function(st,n) {
 			var b = ''; 
 			var s = st;

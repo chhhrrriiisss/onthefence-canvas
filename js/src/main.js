@@ -21,6 +21,7 @@ requirejs.config({
 		'Clouds' : 'entities/src/clouds',
 		'Hills' : 'entities/src/hills',
 		'Bale' : 'entities/src/bale',
+		'Sheep' : 'entities/src/sheep',
 
 		'domReady' : 'utils/domReady.min',
 		'fnc' : 'utils/src/fnc',
