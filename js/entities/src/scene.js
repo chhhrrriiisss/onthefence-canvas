@@ -50,13 +50,23 @@ define('Scene',[
 			window.disableScroll = false;
 
 			var rawData = this.assets['data'];
+			var rawVectors = this.assets['vectors'];
 			var data = [];
+			var vectors = [];
 
 
 			for (var key in rawData) {
 				var item = rawData[key];
 				data.push(item);			
 			}
+
+			for (var key in rawVectors) {
+				var name = rawVectors[key].object;
+				var code = rawVectors[key].code;	
+				vectors[name] = {name: name, code: code};
+			}
+
+			console.log(vectors['sheep_face'])
 			
 			this.bales = new Object();
 			this.bales.graphics = new createjs.Container();
@@ -81,7 +91,7 @@ define('Scene',[
 			that.parallaxLayers['hillFar'] = new Parallax(this, -2000, parseInt(stage.canvas.height - hillsFarImage.height) - 25, hillsFarImage, .5, 10, true); // x, y, image, offset, easing, loop\
 
 			this.cloudLayer = new Clouds(cloudImage);
-			this.sheep = new Sheep( (stage.canvas.width/2), (stage.canvas.height/2) + 100, this.assets['sheep_face'], this.assets['sheep_body'], this.assets['sheep_legs']);
+			this.sheep = new Sheep( (stage.canvas.width/2), (stage.canvas.height/2) + 100, vectors['sheep_face'], vectors['sheep_body'], vectors['sheep_legs']);
 			// this.baleLayer = new Bale(0,0, baleImage);
 		
 			that.parallaxLayers['bales'] = new Parallax(this, 1000, 600, this.bales, 1, 10); // x, y, image, offset, easing, loop

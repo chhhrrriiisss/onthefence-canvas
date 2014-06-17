@@ -3,6 +3,17 @@ define('fnc', function(){
 
 	fnc = {
 
+		generateVector: function(code) {
+					
+		  	ctx = new createjs.Graphics();
+			
+			generateVector = new Function(code);
+			generateVector();
+
+			return ctx;
+
+		},
+
 		isMobile: function() {
 
 			if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {

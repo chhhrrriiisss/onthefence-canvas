@@ -9,10 +9,8 @@ define('Preloader', [
 		{id: "hillsMed", src:"img/hill_med.png"},
 		{id: "hillsFar", src:"img/hill_far.png"},
 		{id: "bale", src:"img/bale.jpg"},
-		{id: "sheep_face", src:"img/sheep_face.png"},
-		{id: "sheep_body", src:"img/sheep_body.png"},
-		{id: "sheep_legs", src:"img/sheep_legs.png"},
-		{id: "data", src:"js/data.json"}
+		{id: "data", src:"js/data.json"},
+		{id: "vectors", src:"js/vectors.json"}
 	];
 
 	Preloader = {

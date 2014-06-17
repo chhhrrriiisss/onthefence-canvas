@@ -122,6 +122,14 @@
     transition: @transition;
 }
 
+.animation(@anim) 
+{
+   -webkit-animation: @anim; /* Safari 4+ */
+  -moz-animation:    @anim; /* Fx 5+ */
+  -o-animation:      @anim; /* Opera 12+ */
+  animation:         @anim; /* IE 10+ */
+}
+
 
 // Box sizing
 .box-sizing(@declaration: border-box) {
